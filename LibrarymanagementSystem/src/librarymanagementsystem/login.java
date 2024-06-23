@@ -43,7 +43,7 @@ public class login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panal.setBackground(new java.awt.Color(51, 51, 51));
+        panal.setBackground(new java.awt.Color(33, 51, 71));
         panal.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -64,7 +64,7 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(153, 153, 153));
+        jButton1.setBackground(new java.awt.Color(60, 126, 160));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Login");
@@ -74,7 +74,7 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(153, 153, 153));
+        jButton2.setBackground(new java.awt.Color(60, 126, 160));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cancel");
@@ -84,10 +84,11 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField2.setEditable(false);
+        jTextField2.setBackground(new java.awt.Color(119, 159, 199));
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField2.setText("Welcome , Login to your Account");
+        jTextField2.setText("  Welcome , Login to your Account");
         jTextField2.setBorder(null);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,26 +101,27 @@ public class login extends javax.swing.JFrame {
         panalLayout.setHorizontalGroup(
             panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panalLayout.createSequentialGroup()
-                .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panalLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panalLayout.createSequentialGroup()
-                                .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(72, 72, 72)
-                                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panalLayout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(26, 26, 26)
-                                .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
-                                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panalLayout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(jLabel1)))
+                .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panalLayout.createSequentialGroup()
+                            .addGap(60, 60, 60)
+                            .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(panalLayout.createSequentialGroup()
+                                    .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(72, 72, 72)
+                                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(panalLayout.createSequentialGroup()
+                                    .addComponent(jButton1)
+                                    .addGap(26, 26, 26)
+                                    .addGroup(panalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton2)
+                                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(panalLayout.createSequentialGroup()
+                            .addGap(147, 147, 147)
+                            .addComponent(jLabel1))))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         panalLayout.setVerticalGroup(
@@ -177,8 +179,8 @@ public class login extends javax.swing.JFrame {
         try{
             String  sql = "select * from Librarian where name=? and password=?";
             pst = con.prepareStatement(sql);
-            pst.setString(1, user.getText());
-            pst.setString(2, pass.getText());
+            pst.setString(1, user.getText().trim());
+            pst.setString(2, pass.getText().trim());
             rs = pst.executeQuery();
            
             if(rs.next()){
@@ -189,10 +191,17 @@ public class login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"User name and password not matched");
             }
         }
-            catch(Exception e){
-                    JOptionPane.showMessageDialog(null,e);      
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e); 
+        }
+         finally{
+            try{
+                if(pst != null)pst.close();
+            }catch(SQLException e){
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-    }
+
     /**
      * @param args the command line arguments
      */

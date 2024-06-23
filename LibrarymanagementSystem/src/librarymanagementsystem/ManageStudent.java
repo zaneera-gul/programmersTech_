@@ -30,9 +30,10 @@ public class ManageStudent extends javax.swing.JFrame {
     }
     
     public void studentDetails(){
+         Statement st = null; 
         try{
-            Statement st = con.createStatement(); 
-            rs = st.executeQuery("Select*from Student");
+           st =con.createStatement();
+            rs = st.executeQuery("Select*from student");
             while(rs.next()){
                 String sid = rs.getString("student_id");
                 String sName = rs.getString("name");
@@ -45,7 +46,15 @@ public class ManageStudent extends javax.swing.JFrame {
         }catch(Exception e){
                 System.out.print(e);               
             }
+         finally {
+        // Close ResultSet, Statement, and Connection
+        try {
+            if (rs != null) rs.close();
+            if (st != null) st.close();
+        } catch (SQLException e) {
         }
+        }
+    }
     public boolean addStudent(){
         boolean isAdded = false;
         Student_id = Integer.parseInt(sid.getText());
@@ -68,6 +77,12 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         }catch (Exception e ){
         System.out.println(e);
+        }
+         finally{
+            try{
+                if(pst != null)pst.close();
+            }catch(SQLException e){
+            }
         }
         return isAdded;
     }
@@ -96,6 +111,12 @@ public class ManageStudent extends javax.swing.JFrame {
         }catch (Exception e ){
         e.printStackTrace();
         }
+         finally{
+            try{
+                if(pst != null)pst.close();
+            }catch(SQLException e){
+            }
+        }
         return isUpdate;
     }
      
@@ -115,6 +136,12 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         }catch (Exception e ){
         e.printStackTrace();
+        }
+         finally{
+            try{
+                if(pst != null)pst.close();
+            }catch(SQLException e){
+            }
         }
         return isDelete;
     }
@@ -168,11 +195,13 @@ public class ManageStudent extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel3.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel3.setBackground(new java.awt.Color(33, 51, 71));
 
-        jPanel4.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel4.setBackground(new java.awt.Color(78, 138, 199));
 
+        jLabel2.setBackground(new java.awt.Color(78, 138, 199));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/icons8_Rewind_48px.png"))); // NOI18N
         jLabel2.setText("Back");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -185,9 +214,10 @@ public class ManageStudent extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,8 +227,10 @@ public class ManageStudent extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTextField1.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField1.setEditable(false);
+        jTextField1.setBackground(new java.awt.Color(33, 51, 71));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("Student I'd");
         jTextField1.setBorder(null);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -207,8 +239,10 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField2.setEditable(false);
+        jTextField2.setBackground(new java.awt.Color(33, 51, 71));
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setText("Student Name");
         jTextField2.setBorder(null);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -217,8 +251,10 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField3.setEditable(false);
+        jTextField3.setBackground(new java.awt.Color(33, 51, 71));
         jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setText("Course");
         jTextField3.setBorder(null);
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
@@ -227,8 +263,10 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField4.setEditable(false);
+        jTextField4.setBackground(new java.awt.Color(33, 51, 71));
         jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(255, 255, 255));
         jTextField4.setText("Department");
         jTextField4.setBorder(null);
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -237,7 +275,7 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setBackground(new java.awt.Color(78, 138, 199));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Add");
@@ -248,7 +286,7 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 0, 0));
+        jButton2.setBackground(new java.awt.Color(78, 138, 199));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Update");
@@ -259,7 +297,7 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 0, 0));
+        jButton3.setBackground(new java.awt.Color(78, 138, 199));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Delete");
@@ -270,32 +308,36 @@ public class ManageStudent extends javax.swing.JFrame {
             }
         });
 
-        sid.setBackground(new java.awt.Color(0, 0, 255));
-        sid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        sid.setBackground(new java.awt.Color(33, 51, 71));
+        sid.setForeground(new java.awt.Color(255, 255, 255));
+        sid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         sid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sidActionPerformed(evt);
             }
         });
 
-        sName.setBackground(new java.awt.Color(0, 0, 255));
-        sName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        sName.setBackground(new java.awt.Color(33, 51, 71));
+        sName.setForeground(new java.awt.Color(255, 255, 255));
+        sName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         sName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sNameActionPerformed(evt);
             }
         });
 
-        course.setBackground(new java.awt.Color(0, 0, 255));
-        course.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        course.setBackground(new java.awt.Color(33, 51, 71));
+        course.setForeground(new java.awt.Color(255, 255, 255));
+        course.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         course.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 courseActionPerformed(evt);
             }
         });
 
-        department.setBackground(new java.awt.Color(0, 0, 255));
-        department.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        department.setBackground(new java.awt.Color(33, 51, 71));
+        department.setForeground(new java.awt.Color(255, 255, 255));
+        department.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         department.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 departmentActionPerformed(evt);
@@ -384,7 +426,7 @@ public class ManageStudent extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(1376, 596));
         jPanel2.setRequestFocusEnabled(false);
 
-        jPanel5.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel5.setBackground(new java.awt.Color(33, 51, 71));
         jPanel5.setPreferredSize(new java.awt.Dimension(0, 5));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -399,7 +441,7 @@ public class ManageStudent extends javax.swing.JFrame {
         );
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel6.setForeground(new java.awt.Color(33, 51, 71));
         jLabel6.setText("Manage Student");
 
         sdetails.setBackground(new java.awt.Color(0, 0, 0));
@@ -421,8 +463,10 @@ public class ManageStudent extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(sdetails);
 
-        jTextField5.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField5.setEditable(false);
+        jTextField5.setBackground(new java.awt.Color(33, 51, 71));
         jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField5.setText("X");
         jTextField5.setActionCommand("null");
@@ -465,7 +509,7 @@ public class ManageStudent extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -534,10 +578,10 @@ public class ManageStudent extends javax.swing.JFrame {
           if(deleteStudent()==true){
               clearTable();
             studentDetails();
-            JOptionPane.showMessageDialog(this, "Book added Successfully");
+            JOptionPane.showMessageDialog(this, "Student delete Successfully");
         }
         else {
-            JOptionPane.showMessageDialog(this, "Addition not Successfull");
+            JOptionPane.showMessageDialog(this, "Deletion not Successfull");
         }
             DeleteField();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -546,10 +590,10 @@ public class ManageStudent extends javax.swing.JFrame {
          if(updateStudent()==true){
              clearTable();
             studentDetails();
-            JOptionPane.showMessageDialog(this, "Book added Successfully");
+            JOptionPane.showMessageDialog(this, "Updation Successfull");
         }
         else {
-            JOptionPane.showMessageDialog(this, "Addition not Successfull");
+            JOptionPane.showMessageDialog(this, "Updation not Successfull");
         }
             DeleteField();
     
@@ -559,7 +603,7 @@ public class ManageStudent extends javax.swing.JFrame {
         if(addStudent()==true){
             clearTable();
             studentDetails();
-            JOptionPane.showMessageDialog(this, "Book added Successfully");
+            JOptionPane.showMessageDialog(this, "Addition Successfull");
         }
         else {
             JOptionPane.showMessageDialog(this, "Addition not Successfull");

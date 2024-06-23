@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package librarymanagementsystem;
 import javax.swing.table.DefaultTableModel;  //to display data on table;
 import java.sql.*;            //to connect with database 
@@ -27,43 +24,53 @@ public class ManageBooks extends javax.swing.JFrame {
    //constructor 
     public ManageBooks() {
         initComponents();
-         con = LibrarymanagementSystem.ConnectDB();
+        con = LibrarymanagementSystem.ConnectDB();
         this.setLocationRelativeTo(null);
         setBookDetails();
     }
     
     
         // methods 
-    public void setBookDetails(){
-        try{
-            Statement st = con.createStatement(); 
-            rs = st.executeQuery("Select*from Books");
-            while(rs.next()){
-                String bid = rs.getString("bookid");
-                String bName = rs.getString("name");
-                String bAuthor = rs.getString("authorname");
-                int bQuantity = rs.getInt("quantity");
-                Object[] obj = {bid,bName,bAuthor,bQuantity};
-                model = (DefaultTableModel)bookTable.getModel();
-                model.addRow(obj);
-                }                        
-        }catch(Exception e){
-                System.out.print(e);               
-            }
+public void setBookDetails(){
+    String query = "select * from Books";
+    Statement st = null;
+    try{
+        st = con.createStatement(); 
+        rs = st.executeQuery(query);
+        while(rs.next()){
+            String bid = rs.getString("bookid");
+            String bName = rs.getString("name");
+            String bAuthor = rs.getString("authorname");
+            int bQuantity = rs.getInt("quantity");
+            Object[] obj = {bid,bName,bAuthor,bQuantity};
+            model = (DefaultTableModel)bookTable.getModel();
+            model.addRow(obj);
         }
+    }catch(Exception e){
+        System.out.print(e);               
+    } finally {
+        // Close ResultSet, Statement, and Connection
+        try {
+            if (rs != null) rs.close();
+            if (st != null) st.close();
+        } catch (SQLException e) {
+        }
+    }
+}
+
     public boolean addBook(){
         boolean isAdded = false;
         book_id = Integer.parseInt(bid.getText());
         book_quantity =  Integer.parseInt(quantity.getText());
         book_name = Bname.getText();
         author_name = Aname.getText();
+        String query = "INSERT INTO books VALUES(?,?,?,?)";
         try{
-            String sql = "INSERT INTO Books VALUES(?,?,?,?)";
-            pst = con.prepareStatement(sql);
+            pst = con.prepareStatement(query);
             pst.setInt(1,book_id);
             pst.setString(2,book_name);
             pst.setString(3,author_name);
-             pst.setInt(4,book_quantity);
+            pst.setInt(4,book_quantity);
             int rowCount = pst.executeUpdate();
             if(rowCount>0){
             isAdded = true;
@@ -74,34 +81,38 @@ public class ManageBooks extends javax.swing.JFrame {
         }catch (Exception e ){
         System.out.println(e);
         }
+        finally{
+            try{
+                if(pst != null)pst.close();
+            }catch(SQLException e){
+            }
+        }
         return isAdded;
     }
     
-     public boolean updateBook(){
-        boolean isUpdate = false;
-        book_id = Integer.parseInt(bid.getText());
-        book_quantity =  Integer.parseInt(quantity.getText());
-        book_name = Bname.getText();
-        author_name = Aname.getText();
-        try{
-            String sql = "UPDATE Books SET book_name=?, quantity = ?, author_name = ? WHERE book_id=?";
-            pst = con.prepareStatement(sql);
-            pst.setString(1,book_name);
-            pst.setInt(2,book_quantity);
-            pst.setString(3,author_name);
-            pst.setInt(4,book_id);
-            int rowCount = pst.executeUpdate();
-            if(rowCount>0){
-            isUpdate = true;
-            }
-            else{
-            isUpdate = false;
-            }
-        }catch (Exception e ){
-        e.printStackTrace();
-        }
-        return isUpdate;
-    }
+     public boolean updateBook() {
+    boolean isUpdate = false;
+    book_id = Integer.parseInt(bid.getText());
+    book_quantity = Integer.parseInt(quantity.getText());
+    book_name = Bname.getText();
+    author_name = Aname.getText();
+    String sql = "UPDATE Books SET name = ?, authorname = ?, quantity = ? WHERE bookid=?";
+    pst = null;
+    try {
+        pst = con.prepareStatement(sql);
+        pst.setString(1, book_name);
+        pst.setString(2, author_name);
+        pst.setInt(3, book_quantity);
+        pst.setInt(4, book_id);
+        int rowCount = pst.executeUpdate();
+        
+        isUpdate = (rowCount > 0);
+    } catch (SQLException e) {
+        System.out.println(e);
+    }     
+    return isUpdate;
+}
+
     public void clearTable(){
         DefaultTableModel model = (DefaultTableModel)bookTable.getModel();
         model.setRowCount(0);
@@ -119,8 +130,8 @@ public class ManageBooks extends javax.swing.JFrame {
      public boolean deleteBook(){
         boolean isDelete = false;
         book_id = Integer.parseInt(bid.getText());
+        String sql = "DELETE FROM Books  WHERE bookid=?";
         try{
-            String sql = "DELETE FROM Books  WHERE bookid=?";
             pst = con.prepareStatement(sql);
             pst.setInt(1,book_id);
             int rowCount = pst.executeUpdate();
@@ -132,6 +143,12 @@ public class ManageBooks extends javax.swing.JFrame {
             }
         }catch (Exception e ){
         e.printStackTrace();
+        }
+         finally{
+            try{
+                if(pst != null)pst.close();
+            }catch(SQLException e){
+            }
         }
         return isDelete;
     }
@@ -173,7 +190,7 @@ public class ManageBooks extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(1376, 596));
         jPanel2.setRequestFocusEnabled(false);
 
-        jPanel5.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel5.setBackground(new java.awt.Color(33, 51, 71));
         jPanel5.setPreferredSize(new java.awt.Dimension(0, 5));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -188,7 +205,7 @@ public class ManageBooks extends javax.swing.JFrame {
         );
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel6.setForeground(new java.awt.Color(33, 51, 71));
         jLabel6.setText("Manage Books");
 
         bookTable.setBackground(new java.awt.Color(0, 0, 0));
@@ -210,8 +227,9 @@ public class ManageBooks extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(bookTable);
 
-        jTextField5.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField5.setBackground(new java.awt.Color(78, 138, 199));
         jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField5.setText("X");
         jTextField5.setActionCommand("null");
@@ -239,11 +257,10 @@ public class ManageBooks extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,11 +275,12 @@ public class ManageBooks extends javax.swing.JFrame {
                 .addGap(0, 303, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel3.setBackground(new java.awt.Color(33, 51, 71));
 
-        jPanel4.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel4.setBackground(new java.awt.Color(78, 138, 199));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/icons8_Rewind_48px.png"))); // NOI18N
         jLabel2.setText("Back");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -284,21 +302,25 @@ public class ManageBooks extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jTextField1.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField1.setBackground(new java.awt.Color(33, 51, 71));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("Enter Book Id");
         jTextField1.setBorder(null);
 
-        jTextField2.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField2.setBackground(new java.awt.Color(33, 51, 71));
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setText("Enter Book Name");
         jTextField2.setBorder(null);
 
-        jTextField3.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField3.setBackground(new java.awt.Color(33, 51, 71));
         jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setText("Author Name");
         jTextField3.setBorder(null);
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
@@ -307,8 +329,9 @@ public class ManageBooks extends javax.swing.JFrame {
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(0, 0, 255));
+        jTextField4.setBackground(new java.awt.Color(33, 51, 71));
         jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(255, 255, 255));
         jTextField4.setText("Quantity");
         jTextField4.setBorder(null);
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -317,7 +340,7 @@ public class ManageBooks extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setBackground(new java.awt.Color(78, 138, 199));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Add");
@@ -328,7 +351,7 @@ public class ManageBooks extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 0, 0));
+        jButton2.setBackground(new java.awt.Color(78, 138, 199));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Update");
@@ -339,7 +362,7 @@ public class ManageBooks extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 0, 0));
+        jButton3.setBackground(new java.awt.Color(78, 138, 199));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Delete");
@@ -350,32 +373,36 @@ public class ManageBooks extends javax.swing.JFrame {
             }
         });
 
-        bid.setBackground(new java.awt.Color(0, 0, 255));
-        bid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        bid.setBackground(new java.awt.Color(33, 51, 71));
+        bid.setForeground(new java.awt.Color(255, 255, 255));
+        bid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         bid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bidActionPerformed(evt);
             }
         });
 
-        Bname.setBackground(new java.awt.Color(0, 0, 255));
-        Bname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        Bname.setBackground(new java.awt.Color(33, 51, 71));
+        Bname.setForeground(new java.awt.Color(255, 255, 255));
+        Bname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         Bname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BnameActionPerformed(evt);
             }
         });
 
-        Aname.setBackground(new java.awt.Color(0, 0, 255));
-        Aname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        Aname.setBackground(new java.awt.Color(33, 51, 71));
+        Aname.setForeground(new java.awt.Color(255, 255, 255));
+        Aname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         Aname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AnameActionPerformed(evt);
             }
         });
 
-        quantity.setBackground(new java.awt.Color(0, 0, 255));
-        quantity.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        quantity.setBackground(new java.awt.Color(33, 51, 71));
+        quantity.setForeground(new java.awt.Color(255, 255, 255));
+        quantity.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(78, 138, 199)));
         quantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quantityActionPerformed(evt);
@@ -468,8 +495,7 @@ public class ManageBooks extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,7 +510,9 @@ public class ManageBooks extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1172, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -584,8 +612,6 @@ public class ManageBooks extends javax.swing.JFrame {
         Bname.setText(model.getValueAt(rowNumber, 1).toString());
         Aname.setText(model.getValueAt(rowNumber, 2).toString());
         quantity.setText(model.getValueAt(rowNumber, 3).toString());
-        
-        
         // TODO add your handling code here:
     }//GEN-LAST:event_bookTableMouseClicked
 

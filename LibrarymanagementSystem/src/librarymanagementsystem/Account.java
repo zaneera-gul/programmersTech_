@@ -82,7 +82,7 @@ public class Account extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel2.setBackground(new java.awt.Color(78, 138, 199));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/icons8_Library_32px.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -157,9 +157,9 @@ public class Account extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBackground(new java.awt.Color(33, 51, 71));
 
-        jPanel5.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel5.setBackground(new java.awt.Color(0, 51, 204));
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Home Page");
@@ -246,7 +246,7 @@ public class Account extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(153, 153, 153));
         jLabel17.setText("Defaulter List");
 
-        jPanel7.setBackground(new java.awt.Color(0, 0, 204));
+        jPanel7.setBackground(new java.awt.Color(78, 138, 199));
 
         jLabel18.setBackground(new java.awt.Color(0, 0, 204));
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -333,7 +333,7 @@ public class Account extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(0, 0, 204));
+        jPanel6.setBackground(new java.awt.Color(78, 138, 199));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -348,6 +348,7 @@ public class Account extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField1.setText("Number Of Books");
         jTextField1.setBorder(null);
@@ -360,7 +361,7 @@ public class Account extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(204, 204, 204));
         jPanel10.setPreferredSize(new java.awt.Dimension(179, 121));
 
-        jPanel9.setBackground(new java.awt.Color(0, 0, 225));
+        jPanel9.setBackground(new java.awt.Color(78, 138, 199));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -396,6 +397,7 @@ public class Account extends javax.swing.JFrame {
                 .addGap(0, 35, Short.MAX_VALUE))
         );
 
+        jTextField2.setEditable(false);
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField2.setText("Number Of Students");
         jTextField2.setBorder(null);
@@ -408,7 +410,7 @@ public class Account extends javax.swing.JFrame {
         jPanel11.setBackground(new java.awt.Color(204, 204, 204));
         jPanel11.setMaximumSize(null);
 
-        jPanel12.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel12.setBackground(new java.awt.Color(0, 51, 204));
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -444,6 +446,7 @@ public class Account extends javax.swing.JFrame {
                 .addGap(0, 35, Short.MAX_VALUE))
         );
 
+        jTextField3.setEditable(false);
         jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField3.setText("Issued Books");
         jTextField3.setBorder(null);
@@ -456,7 +459,7 @@ public class Account extends javax.swing.JFrame {
         jPanel17.setBackground(new java.awt.Color(204, 204, 204));
         jPanel17.setPreferredSize(new java.awt.Dimension(179, 121));
 
-        jPanel18.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel18.setBackground(new java.awt.Color(0, 51, 204));
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -492,6 +495,7 @@ public class Account extends javax.swing.JFrame {
                 .addGap(0, 35, Short.MAX_VALUE))
         );
 
+        jTextField4.setEditable(false);
         jTextField4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField4.setText("Defaulter List");
         jTextField4.setBorder(null);
@@ -503,7 +507,7 @@ public class Account extends javax.swing.JFrame {
 
         jPanel19.setBackground(new java.awt.Color(204, 204, 204));
 
-        jPanel20.setBackground(new java.awt.Color(0, 0, 225));
+        jPanel20.setBackground(new java.awt.Color(78, 138, 199));
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -734,7 +738,7 @@ public class Account extends javax.swing.JFrame {
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
 
     
-     ManageStudent obj = new ManageStudent();
+    ManageStudent obj = new ManageStudent();
     obj.setVisible(true);
     dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel12MouseClicked

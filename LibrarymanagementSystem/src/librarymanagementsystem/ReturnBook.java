@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package librarymanagementsystem;
 
 import java.sql.Connection;
@@ -9,10 +5,7 @@ import java.sql.*;            //to connect with database
 import java.sql.DriverManager;  //to connect with database
 import javax.swing.JOptionPane;  // to display message on screen
 
-/**
- *
- * @author zaneera
- */
+
 public class ReturnBook extends javax.swing.JFrame {
     Connection con = null;
     PreparedStatement pst = null;
@@ -27,7 +20,7 @@ public class ReturnBook extends javax.swing.JFrame {
     public void updateBookcount(){
     int BookId = Integer.parseInt(bid.getText());
     try{
-            String sql = ("Update books set quantity = quantity+1 WHERE book_id = ?");
+            String sql = ("Update books set quantity = quantity+1 WHERE book_id=?");
             pst = con.prepareStatement(sql);
             pst.setInt(1,BookId);
             int rowcount = pst.executeUpdate();
@@ -46,21 +39,19 @@ public class ReturnBook extends javax.swing.JFrame {
         int BookId = Integer.parseInt(bid.getText());
         int studentid = Integer.parseInt(sid.getText());
             try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarymanagement","root","new_password");
-            String sql = "Select * from issuebook where book_id =? and student_id=? and status = ?" ;
-            PreparedStatement pst = con.prepareStatement(sql);
+            String sql = "Select * from IssueBook where bookid=? and studentid=? and status=?" ;
+            pst = con.prepareStatement(sql);
             pst.setInt(1,BookId);
             pst.setInt(2,studentid);
             pst.setString(3,"pending");
             
-           ResultSet rs = pst.executeQuery();
+            rs = pst.executeQuery();
             if(rs.next()){
-                iid.setText(rs.getString("id"));
-                bname.setText(rs.getString("book_name"));
-                sname.setText(rs.getString("student_name"));
-                idate.setText(rs.getString("issue_date"));
-                ddate.setText(rs.getString("due_date"));
+                iid.setText(rs.getString("bookid"));
+                bname.setText(rs.getString("bookname"));
+                sname.setText(rs.getString("studentname"));
+                idate.setText(rs.getString("issuedate"));
+                ddate.setText(rs.getString("duedate"));
                 error.setText(null);
             }else{
              iid.setText(null);
@@ -81,10 +72,8 @@ public class ReturnBook extends javax.swing.JFrame {
         int bookId = Integer.parseInt(bid.getText());
         int studentId = Integer.parseInt(sid.getText());
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarymanagement","root","new_password");
-            String sql = "UPDATE issuebook set Status = ? Where book_id=? and student_id=? and status=?";
-            PreparedStatement pst = con.prepareStatement(sql);
+            String sql = "UPDATE IssueBook set Status = ? Where bookid=? and studentid=? and status=?";
+            pst = con.prepareStatement(sql);
             pst.setString(1,"returned");
             pst.setInt(2,bookId);
             pst.setInt(3,studentId);
@@ -148,9 +137,10 @@ public class ReturnBook extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/library-2.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
-        jPanel6.setBackground(new java.awt.Color(0, 0, 204));
+        jPanel6.setBackground(new java.awt.Color(33, 51, 71));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/icons8_Rewind_48px.png"))); // NOI18N
         jLabel11.setText("Back");
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,9 +160,10 @@ public class ReturnBook extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 42, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -191,9 +182,10 @@ public class ReturnBook extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        label.setBackground(new java.awt.Color(255, 102, 0));
+        label.setBackground(new java.awt.Color(33, 51, 71));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText(" Book Details");
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -230,6 +222,8 @@ public class ReturnBook extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Due Date");
 
+        error.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout labelLayout = new javax.swing.GroupLayout(label);
         label.setLayout(labelLayout);
         labelLayout.setHorizontalGroup(
@@ -237,7 +231,6 @@ public class ReturnBook extends javax.swing.JFrame {
             .addGroup(labelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(labelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(error, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(labelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -255,21 +248,23 @@ public class ReturnBook extends javax.swing.JFrame {
                             .addComponent(bname, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(sname, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(idate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ddate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ddate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(labelLayout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(error, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(390, 390, 390))
         );
         labelLayout.setVerticalGroup(
             labelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(labelLayout.createSequentialGroup()
                 .addGap(68, 68, 68)
-                .addGroup(labelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(labelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(iid, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85)
+                .addGroup(labelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iid, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(labelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bname, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,7 +281,7 @@ public class ReturnBook extends javax.swing.JFrame {
                 .addGroup(labelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ddate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(error, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -294,10 +289,10 @@ public class ReturnBook extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel8.setForeground(new java.awt.Color(33, 51, 71));
         jLabel8.setText("Return Book");
 
-        jPanel5.setBackground(new java.awt.Color(255, 102, 0));
+        jPanel5.setBackground(new java.awt.Color(33, 51, 71));
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 5));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -312,29 +307,30 @@ public class ReturnBook extends javax.swing.JFrame {
         );
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel9.setForeground(new java.awt.Color(33, 51, 71));
         jLabel9.setText("Book Id:");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel10.setForeground(new java.awt.Color(33, 51, 71));
         jLabel10.setText("Student Id:");
 
-        bid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 102, 0)));
+        bid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(33, 51, 71)));
         bid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bidActionPerformed(evt);
             }
         });
 
-        sid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 102, 0)));
+        sid.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(33, 51, 71)));
         sid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sidActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(51, 0, 255));
+        jButton1.setBackground(new java.awt.Color(78, 138, 199));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Find");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,8 +338,9 @@ public class ReturnBook extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 102, 0));
+        jButton2.setBackground(new java.awt.Color(33, 51, 71));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Return Book");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,8 +348,9 @@ public class ReturnBook extends javax.swing.JFrame {
             }
         });
 
-        jTextField5.setBackground(new java.awt.Color(255, 51, 0));
+        jTextField5.setBackground(new java.awt.Color(33, 51, 71));
         jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField5.setText("X");
         jTextField5.setActionCommand("null");
@@ -394,7 +392,7 @@ public class ReturnBook extends javax.swing.JFrame {
                             .addComponent(sid, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 6, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(108, 108, 108)
+                .addGap(117, 117, 117)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
